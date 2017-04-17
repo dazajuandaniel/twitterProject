@@ -1,1 +1,3 @@
-# twitterProject
+#Dependencies
+* Tweepy
+* Couchdb
