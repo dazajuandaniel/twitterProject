@@ -1,0 +1,4 @@
+textblob
+couchdb
+tweepy
+jsonpickle

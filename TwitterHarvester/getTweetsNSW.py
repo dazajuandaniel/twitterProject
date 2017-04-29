@@ -6,6 +6,7 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 import couchdb,json
+import TwitterSentiment as ts
 log = open("tnsw.log", "a")
 sys.stdout = log
 
@@ -19,7 +20,7 @@ auth.set_access_token(access_token, access_secret)
 api = tw.API(auth)
 
 try:
-    couch = couchdb.Server()
+    couch = couchdb.Server('http://115.146.93.140:5984/')
     db = couch['raw_tweets']
 except:
     print 'Database Connection Error'
@@ -28,6 +29,10 @@ class StdOutListener(StreamListener):
     def on_data(self, data):
         
         tweet = json.loads(data)
+        #Adding Sentiment
+        clean_tweet_text=ts.processTweet(tweet['text'])
+        sentiment=ts.getSentiment(clean_tweet_text)
+        tweet['sentiment']=sentiment
         db.save(tweet)
         #print data
         return True

@@ -6,6 +6,7 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 import couchdb,json
+import TwitterSentiment as ts
 log = open("tvic.log", "a")
 sys.stdout = log
 
@@ -28,6 +29,10 @@ class StdOutListener(StreamListener):
     def on_data(self, data):
         
         tweet = json.loads(data)
+        #Adding Sentiment
+        clean_tweet_text=ts.processTweet(tweet['text'])
+        sentiment=ts.getSentiment(clean_tweet_text)
+        tweet['sentiment']=sentiment
         db.save(tweet)
         #print data
         return True
