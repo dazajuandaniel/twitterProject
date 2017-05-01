@@ -13,8 +13,8 @@ access_token = '4506027074-Ics9Dy94Dvs1hxMMJ2OBRJzqGbc9VX1A61OPBFL'
 access_secret = 'MWMagt2OsdXBRMVBBtq87OTbbx5NdVlQ55t4zQPWkKrOA'
 
 def logPrint(s):
-    f1=open('./output.txt', 'w+')
-    f1.write(s)
+    f1=open('./output.txt', 'a')
+    f1.write('\n'+s+"\n")
     f1.close()
 #Ref: https://www.karambelkar.info/2015/01/how-to-use-twitters-search-rest-api-most-effectively./
 
@@ -55,8 +55,10 @@ politicslist = ['politics','immigration','migration','visa','#migration','#Austr
                   'labour party','liberal party','left wing','right wing','liberal party australia',
                   'politics australia','labour party australia','coalition party australia','australian labor party',
                   'australia politics','labour OR liberal','turnbull']
+crimelist=['security Australia','robbed australia','safety australia','police','mugged australia','crime rate','crimes','justice Australia','terrorist australia',
+'federal crime','robs australia','terrorist australia']
 
-searchList=[ailist,foodlist,politicslist]
+searchList=[ailist,foodlist,politicslist,crimelist]
 #Search Config
 maxTweets = 100000000000000
 tweetsPerQry = 100
@@ -67,10 +69,10 @@ max_id = -1L
 lang='en'
 geocode='-37.810279,144.962619,5000000mi'
 
-searchListCount=2
+searchListCount=0
 totallistcount=0
 
-maxList=len(searchList[totallistcount][searchListCount])
+maxList=len(searchList[totallistcount])
 maxlistcount=len(searchList)
 tweetCount = 0
 #print("Downloading max {0} tweets".format(maxTweets))
@@ -78,11 +80,14 @@ tweetCount = 0
 #f1.write('Downloading %d tweets' %maxTweets)
 while tweetCount < maxTweets:
     
-    if searchListCount==maxList-1:
+    if searchListCount>maxList-1:
         totallistcount+=1
+        if totallistcount>maxlistcount-1:
+            totallistcount=0
+            maxlistcount=len(searchList[totallistcount])
         maxList=len(searchList[totallistcount][searchListCount])
 
-    if totallistcount==maxlistcount-1:
+    if totallistcount>maxlistcount-1:
         totallistcount=0
         maxlistcount=len(searchList[totallistcount])
 
@@ -110,10 +115,11 @@ while tweetCount < maxTweets:
             #print("No more tweets found, sleeping for 15 minutes")
             #print >> f1, "No more tweets found, sleeping for 15 minutes"
             #f1.write('No more tweets found, sleeping for 15 minutes')
-            logPrint('Sleeping 15 mins')
+            logPrint(' Sleeping 15 mins '+str(searchQuery))
             time.sleep(15*60)
             searchListCount+=1
             max_id = -1L
+            sinceId = None
             continue
         
         for tweet in new_tweets:
@@ -128,7 +134,7 @@ while tweetCount < maxTweets:
         #print("Downloaded {0} tweets".format(tweetCount))
         #print >> f1, "Downloaded {0} tweets".format(tweetCount)
         #f1.write('Downloaded %d tweets' %tweetCount)
-        logPrint('Downloaded: '+str(tweetCount))
+        logPrint(' Downloaded: '+str(tweetCount))
         max_id = new_tweets[-1].id
     except tweepy.TweepError as e:
         # Just exit if any error
@@ -136,8 +142,10 @@ while tweetCount < maxTweets:
         #print >> f1, "Tweepy Error"
         #f1.write('Tweepy Error')
         #fi.close()
-        logPrint('Tweepy Error')
+        logPrint(' Tweepy Error ')
         time.sleep(15*60)
         searchListCount+=1
         max_id = -1L
+        sinceId = None
+        continue
         #break
