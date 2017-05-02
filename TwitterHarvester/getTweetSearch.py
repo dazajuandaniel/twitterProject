@@ -48,18 +48,18 @@ if (not api):
     logPrint('API Error')
 
 #This is what we are searching for
-ailist=['#AI',"artificial intelligence","#deeplearning","datascience",'#robots','robots','automation','#ArtificialIntelligence',
-       '#bot','#bots','#ml','#iot','#tech','#analytics']
-foodlist=['food','fitness food','#delicious','drink','eat','#coffee','beer','#foodie','#foodvision','#foodtruck','#eatingWell','#eatlocal','#foodparty','restaurant','eating out',
-'beverage','chicken rice','pasta','indian food','food festival']
-politicslist = ['politics','immigration','migration','visa','#migration','#Australia','permanent migration program',"visa change",'sponsorship australia',
-                  'labour party','liberal party','left wing','right wing','liberal party australia',
-                  'politics australia','labour party australia','coalition party australia','australian labor party',
-                  'australia politics','labour OR liberal','turnbull']
-crimelist=['security Australia','robbed australia','safety australia','police','mugged australia','crime rate','crimes','justice Australia','terrorist australia',
-'federal crime','robs australia','terrorist australia','jail sentence']
+words=['#AI',"artificial intelligence","#deeplearning","datascience",'#robots','robots','automation','#ArtificialIntelligence',
+       '#bot','#bots','#ml','#iot','#tech','#analytics',
+       'food','fitness food','#delicious','drink','eat','#coffee','beer','#foodie','#foodvision','#foodtruck','#eatingWell','#eatlocal','#foodparty','restaurant','eating out',
+       'beverage','chicken rice','pasta','indian food','food festival',
+       'politics','immigration','migration','visa','#migration','#Australia','permanent migration program',"visa change",'sponsorship australia',
+       'labour party','liberal party','left wing','right wing','liberal party australia',
+       'politics australia','labour party australia','coalition party australia','australian labor party',
+       'australia politics','labour OR liberal','turnbull',
+       'security Australia','robbed australia','safety australia','police','mugged australia','crime rate','crimes','justice Australia','terrorist australia',
+       'federal crime','robs australia','terrorist australia','jail sentence']
 
-searchList=[ailist,foodlist,politicslist,crimelist]
+searchList=words
 #Search Config
 maxTweets = 100000000000000
 tweetsPerQry = 100
@@ -71,9 +71,6 @@ lang='en'
 geocode='-37.810279,144.962619,10000mi'
 
 searchListCount=0
-totallistcount=1
-
-maxList=len(searchList[totallistcount])
 maxlistcount=len(searchList)
 tweetCount = 0
 #print("Downloading max {0} tweets".format(maxTweets))
@@ -81,18 +78,10 @@ tweetCount = 0
 #f1.write('Downloading %d tweets' %maxTweets)
 while tweetCount < maxTweets:
     
-    if searchListCount>maxList-1:
-        totallistcount+=1
-        if totallistcount>maxlistcount-1:
-            totallistcount=0
-            maxlistcount=len(searchList[totallistcount])
-        maxList=len(searchList[totallistcount])
+    if searchListCount>maxlistcount-1:
+        searchListCount=0
 
-    if totallistcount>maxlistcount-1:
-        totallistcount=0
-        maxlistcount=len(searchList[totallistcount])
-
-    searchQuery=searchList[totallistcount][searchListCount]
+    searchQuery=searchList[searchListCount]
     #print "Searching for: ",searchQuery
     #print >> f1, "Searching for: ",searchQuery
     #f1.write('Searching for %s' %searchQuery)
@@ -113,9 +102,6 @@ while tweetCount < maxTweets:
                                         max_id=str(max_id - 1),
                                         since_id=sinceId)
         if not new_tweets:
-            #print("No more tweets found, sleeping for 15 minutes")
-            #print >> f1, "No more tweets found, sleeping for 15 minutes"
-            #f1.write('No more tweets found, sleeping for 15 minutes')
             logPrint(' Sleeping 15 mins '+str(searchQuery))
             time.sleep(15*60)
             searchListCount+=1
@@ -132,17 +118,10 @@ while tweetCount < maxTweets:
             db.save(tweet_)
         
         tweetCount += len(new_tweets)
-        #print("Downloaded {0} tweets".format(tweetCount))
-        #print >> f1, "Downloaded {0} tweets".format(tweetCount)
-        #f1.write('Downloaded %d tweets' %tweetCount)
         logPrint(' Downloaded: '+str(tweetCount))
         max_id = new_tweets[-1].id
+
     except tweepy.TweepError as e:
-        # Just exit if any error
-        #print("Tweepy Error")
-        #print >> f1, "Tweepy Error"
-        #f1.write('Tweepy Error')
-        #fi.close()
         logPrint(' Tweepy Error ')
         time.sleep(15*60)
         searchListCount+=1

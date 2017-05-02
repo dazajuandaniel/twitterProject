@@ -1,6 +1,5 @@
 {
-    "id":"design/views",
-    "_rev":"12345",
+    "id":"_design/views",
     "language":"javascript",
     "views":
     {
@@ -12,8 +11,11 @@
         },
         "TweetsbyHour":{
             "map":"function(doc){function parseTwitterDate(text){return new Date(Date.parse(text.replace(/( +)/, ' UTC$1')));}var tweetdate=parseTwitterDate(doc.created_at);var seconds = tweetdate.getSeconds();var minutes = tweetdate.getMinutes();var hour = tweetdate.getHours();if(tweetdate && doc.sentiment){emit(hour,1)}}",
-            "reduce":"{_sum}"
-        }
-        
+            "reduce":"_sum"
+        },
+        "TweetsbyHourSentiment":{
+            "map":"function(doc){function parseTwitterDate(text){return new Date(Date.parse(text.replace(/( +)/, ' UTC$1')));}var tweetdate=parseTwitterDate(doc.created_at);var seconds = tweetdate.getSeconds();var minutes = tweetdate.getMinutes();var hour = tweetdate.getHours();if(tweetdate && doc.sentiment){emit([hour,doc.sentiment],1)}}",
+            "reduce":"_sum"
+        }        
     }
 }
