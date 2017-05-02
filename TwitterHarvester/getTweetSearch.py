@@ -50,13 +50,14 @@ if (not api):
 #This is what we are searching for
 ailist=['#AI',"artificial intelligence","#deeplearning","datascience",'#robots','robots','automation','#ArtificialIntelligence',
        '#bot','#bots','#ml','#iot','#tech','#analytics']
-foodlist=['food','fitness food','#delicious','drink','eat','#coffee','beer','#foodie','#foodvision','#foodtruck','#eatingWell','#eatlocal','#foodparty']
+foodlist=['food','fitness food','#delicious','drink','eat','#coffee','beer','#foodie','#foodvision','#foodtruck','#eatingWell','#eatlocal','#foodparty','restaurant','eating out',
+'beverage','chicken rice','pasta','indian food','food festival']
 politicslist = ['politics','immigration','migration','visa','#migration','#Australia','permanent migration program',"visa change",'sponsorship australia',
                   'labour party','liberal party','left wing','right wing','liberal party australia',
                   'politics australia','labour party australia','coalition party australia','australian labor party',
                   'australia politics','labour OR liberal','turnbull']
 crimelist=['security Australia','robbed australia','safety australia','police','mugged australia','crime rate','crimes','justice Australia','terrorist australia',
-'federal crime','robs australia','terrorist australia']
+'federal crime','robs australia','terrorist australia','jail sentence']
 
 searchList=[ailist,foodlist,politicslist,crimelist]
 #Search Config
@@ -67,10 +68,10 @@ max_id = -1L
 
 # Search Criteria
 lang='en'
-geocode='-37.810279,144.962619,5000000mi'
+geocode='-37.810279,144.962619,10000mi'
 
 searchListCount=0
-totallistcount=0
+totallistcount=1
 
 maxList=len(searchList[totallistcount])
 maxlistcount=len(searchList)
@@ -85,7 +86,7 @@ while tweetCount < maxTweets:
         if totallistcount>maxlistcount-1:
             totallistcount=0
             maxlistcount=len(searchList[totallistcount])
-        maxList=len(searchList[totallistcount][searchListCount])
+        maxList=len(searchList[totallistcount])
 
     if totallistcount>maxlistcount-1:
         totallistcount=0

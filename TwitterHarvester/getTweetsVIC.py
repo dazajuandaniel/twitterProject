@@ -7,8 +7,8 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 import couchdb,json
 import TwitterSentiment as ts
-log = open("tvic.log", "a")
-sys.stdout = log
+#log = open("tvic.log", "a")
+#sys.stdout = log
 
 consumer_key = 'XqNOFK3tkWO3ueraq4WJgAbL8'
 consumer_secret = 'KA79XONJOZL8WkBpZAuqkTjDxRhiT7KGf16x2SLTCFfqSpTnoG'
