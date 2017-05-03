@@ -7,8 +7,7 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 import couchdb,json
 import TwitterSentiment as ts
-#log = open("tnsw.log", "a")
-#sys.stdout = log
+import config
 
 consumer_key = 'Rf6jmd167A0seBp8Nzg9w2LTs'
 consumer_secret = 'cezVbuQna3A2mRo7dQCcjPk53qnTBSEFj1IZhxPRA3KaTrA5xR'
@@ -19,11 +18,7 @@ auth = tw.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 api = tw.API(auth)
 
-try:
-    couch = couchdb.Server('http://115.146.93.140:5984/')
-    db = couch['raw_tweets']
-except:
-    print 'Database Connection Error'
+db=config.db_setup(config.SERVER_ADDRESS)
 
 class StdOutListener(StreamListener):
     def on_data(self, data):

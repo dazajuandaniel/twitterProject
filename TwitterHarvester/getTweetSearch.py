@@ -1,53 +1,35 @@
+#!/usr/bin/python
 import sys,os,time
 import json,jsonpickle
 import tweepy
 import couchdb
 import TwitterSentiment
-#log = open("tnsw.log", "a")
-#sys.stdout = log
+import config
+from config import logPrint
 
-#f1=open('./output.txt', 'w+')
+
 consumer_key = '6LI8WFTgasVJusVl68WVoJS5X'
 consumer_secret = 'GJgYiiOKnNjhyGbsqHFfV4cDOUi7FzQ16DXHc9ca0bBFRi23qv'
 access_token = '4506027074-Ics9Dy94Dvs1hxMMJ2OBRJzqGbc9VX1A61OPBFL'
 access_secret = 'MWMagt2OsdXBRMVBBtq87OTbbx5NdVlQ55t4zQPWkKrOA'
 
-def logPrint(s):
-    f1=open('./output.txt', 'a')
-    f1.write('\n'+s+"\n")
-    f1.close()
+
 #Ref: https://www.karambelkar.info/2015/01/how-to-use-twitters-search-rest-api-most-effectively./
-
 #places = api.geo_search(query="AUSTRALIA", granularity="country")
-
 #place_id = places[0].id
 #print('AUSTRALIA id is: ',place_id)
 #3f14ce28dc7c4566
 
 #Database Setup
-try:
-    couch = couchdb.Server('http://115.146.93.140:5984/')
-    db = couch['raw_tweets']
-except:
-    #print 'Database Connection Error'
-    #print >> f1, "Database Connection Error"
-    #f1.write('DB error')
-    logPrint('DB Error')
+db=config.db_setup(config.SERVER_ADDRESS)
 
 
 auth = tweepy.AppAuthHandler(consumer_key, consumer_secret)
-
-#Setting up new api wrapper, using authentication only
 api = tweepy.API(auth, wait_on_rate_limit=True,wait_on_rate_limit_notify=True)
- 
-#Error handling
 if (not api):
-    #print ("Problem Connecting to API")
-    #print >> f1, "Problem Connecting to API"
-    #f1.write('API Error')
     logPrint('API Error')
 
-#This is what we are searching for
+#Search KeyWords
 words=['#AI',"artificial intelligence","#deeplearning","datascience",'#robots','robots','automation','#ArtificialIntelligence',
        '#bot','#bots','#ml','#iot','#tech','#analytics',
        'food','fitness food','#delicious','drink','eat','#coffee','beer','#foodie','#foodvision','#foodtruck','#eatingWell','#eatlocal','#foodparty','restaurant','eating out',
@@ -59,8 +41,8 @@ words=['#AI',"artificial intelligence","#deeplearning","datascience",'#robots','
        'security Australia','robbed australia','safety australia','police','mugged australia','crime rate','crimes','justice Australia','terrorist australia',
        'federal crime','robs australia','terrorist australia','jail sentence']
 
+
 searchList=words
-#Search Config
 maxTweets = 100000000000000
 tweetsPerQry = 100
 sinceId = None
@@ -73,18 +55,12 @@ geocode='-37.810279,144.962619,10000mi'
 searchListCount=0
 maxlistcount=len(searchList)
 tweetCount = 0
-#print("Downloading max {0} tweets".format(maxTweets))
-#print >> f1, "Downloading max {0} tweets".format(maxTweets)
-#f1.write('Downloading %d tweets' %maxTweets)
 while tweetCount < maxTweets:
     
     if searchListCount>maxlistcount-1:
         searchListCount=0
 
     searchQuery=searchList[searchListCount]
-    #print "Searching for: ",searchQuery
-    #print >> f1, "Searching for: ",searchQuery
-    #f1.write('Searching for %s' %searchQuery)
     logPrint('Searching for: '+str(searchQuery))
     try:
         if (max_id <= 0):
@@ -128,4 +104,3 @@ while tweetCount < maxTweets:
         max_id = -1L
         sinceId = None
         continue
-        #break

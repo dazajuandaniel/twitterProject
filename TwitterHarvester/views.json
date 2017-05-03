@@ -1,5 +1,6 @@
 {
     "id":"_design/views",
+    "_rev":"3-f3b5bef84cbedc6576867bc6501e3abc",
     "language":"javascript",
     "views":
     {
@@ -16,6 +17,13 @@
         "TweetsbyHourSentiment":{
             "map":"function(doc){function parseTwitterDate(text){return new Date(Date.parse(text.replace(/( +)/, ' UTC$1')));}var tweetdate=parseTwitterDate(doc.created_at);var seconds = tweetdate.getSeconds();var minutes = tweetdate.getMinutes();var hour = tweetdate.getHours();if(tweetdate && doc.sentiment){emit([hour,doc.sentiment],1)}}",
             "reduce":"_sum"
-        }        
+        },
+        "HasNoSentiment":{
+            "map":"function(doc){if(!doc.sentiment){emit(doc.id,doc)}}"
+        },
+        "TweetsbySentiment":{
+            "map":"function(doc){if(doc.sentiment){emit(doc.sentiment,1)}}",
+            "reduce":"_sum"
+        }
     }
 }
