@@ -10,7 +10,7 @@
 import math
 import re
 import sys
-from replaceSentiment import processTweet
+from TwitterSentiment import processTweet
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -39,7 +39,7 @@ def sentiment(text):
         sentiment = 0
     return sentiment
 
-def getSentiment(value,neutral_threshold):
+def getSentiment(value,neutral_threshold=0):
     '''Return Positive, Neutral or Negative Tweet Rating'''
     if -neutral_threshold <= value <= neutral_threshold:
         return "Neutral"

@@ -1,6 +1,6 @@
 {
     "id":"_design/views",
-    "_rev":"3-f3b5bef84cbedc6576867bc6501e3abc",
+    "_rev":"5-b49d362c9ec1c363e8d88cd0af032b4f",
     "language":"javascript",
     "views":
     {
@@ -24,6 +24,13 @@
         "TweetsbySentiment":{
             "map":"function(doc){if(doc.sentiment){emit(doc.sentiment,1)}}",
             "reduce":"_sum"
+        },
+        "hasAfinnSentimentAggregated":{
+            "map":"function(doc){if(doc.sentimentAFINN){emit(doc.sentimentAFINN,1)}}",
+            "reduce":"_sum"
+        },
+        "hasAfinnSentiment":{
+            "map":"function(doc){if(doc.sentimentAFINN){emit(doc._id,doc)}}"
         }
     }
 }
