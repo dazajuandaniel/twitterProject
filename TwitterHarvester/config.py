@@ -39,11 +39,11 @@ PASS='secret'
 #Constants
 SERVER_ADDRESS='http://'+USER+":"+PASS+"@"+'115.146.93.140:5984/'
 #Special Print
-def logPrint(s):
-    f1=open('./output.txt', 'a')
+def logPrint(s,name):
+    f1=open('./'+name+'.txt', 'a')
     f1.write('\n'+s+"\n")
     f1.close()
-
+filename='configFile'
 #Database Setup
 def db_setup(address=''):
     if address=='':
@@ -52,24 +52,16 @@ def db_setup(address=''):
             couch = couchdb.Server('http://'+USER+":"+PASS+"@"+address)
             db = couch['raw_tweets']
         except:
-            logPrint('Database Connection Error')
+            logPrint('Database Connection Error',filename)
             exit()
     else:
         try:
             couch = couchdb.Server(SERVER_ADDRESS)
             db = couch['raw_tweets']
         except:
-            logPrint('Database Connection Error')
+            logPrint('Database Connection Error',filename)
             exit()
     return db
 
-def db_new_setup():
-    try:
-        couch = couchdb.Server('http://dazaj:secret@115.146.93.140:5984/')
-        db = couch['tweets_clean']
-    except:
-        logPrint('Database Connection Error')
-        exit()
-    return db
 
 

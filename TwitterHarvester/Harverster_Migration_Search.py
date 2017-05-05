@@ -9,10 +9,10 @@ from config import logPrint
 
 
 start_time = time.time()
-consumer_key = config.CONSUMER_KEY_JUN
-consumer_secret = config.CONSUMER_SECRET_JUN
-access_token = config.ACCESS_TOKEN_JUN
-access_secret = config.ACCESS_SECRET_JUN
+consumer_key = config.CONSUMER_KEY_SAI
+consumer_secret = config.CONSUMER_SECRET_SAI
+access_token = config.ACCESS_TOKEN_SAI
+access_secret = config.ACCESS_SECRET_SAI
 
 
 #Ref: https://www.karambelkar.info/2015/01/how-to-use-twitters-search-rest-api-most-effectively./
@@ -22,13 +22,14 @@ access_secret = config.ACCESS_SECRET_JUN
 #3f14ce28dc7c4566
 
 #Database Setup
-db=config.db_setup()
-
+#NSW
+db=config.db_setup(config.SERVER_ADDRESS)
+filename='HarNSW'
 
 auth = tweepy.AppAuthHandler(consumer_key, consumer_secret)
 api = tweepy.API(auth, wait_on_rate_limit=True,wait_on_rate_limit_notify=True)
 if (not api):
-    logPrint('API Error')
+    logPrint('API Error',filename)
     sys.exit()
 
 #Search KeyWords
@@ -63,7 +64,7 @@ while tweetCount < maxTweets:
         searchListCount=0
 
     searchQuery=searchList[searchListCount]
-    logPrint('Searching for: '+str(searchQuery))
+    logPrint('Searching for: '+str(searchQuery),filename)
     try:
         if (max_id <= 0):
             if (not sinceId):
@@ -83,12 +84,12 @@ while tweetCount < maxTweets:
             
             if tweetCount%18000==0:
                 time.sleep(15*60)
-                logPrint(' Sleeping 15 mins: '+str(searchQuery))
+                logPrint(' Sleeping 15 mins: '+str(searchQuery),filename)
                 start_time=time.time()  
             end = time.time()
             if (end-start_time)>14*60:
                 time.sleep(15*60)
-                logPrint(' Sleeping 15 mins: '+str(searchQuery))
+                logPrint(' Sleeping 15 mins: '+str(searchQuery),filename)
                 start_time=time.time()
             searchListCount+=1
             max_id = -1L
@@ -110,15 +111,10 @@ while tweetCount < maxTweets:
                 continue
                 
         tweetCount += len(new_tweets)
-        logPrint(' Added: '+str(success))
-        logPrint(' Skipped: '+str(duplicates))
+        logPrint(' Added: '+str(success),filename)
+        logPrint(' Skipped: '+str(duplicates),filename)
         max_id = new_tweets[-1].id
 
     except tweepy.TweepError as e:
-        logPrint('Tweepy Error')
-        time.sleep(15*60)
-        start_time=time.time()
-        searchListCount+=1
-        max_id = -1L
-        sinceId = None
-        continue
+        logPrint(str(e),filename)
+        sys.exit()

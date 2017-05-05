@@ -8,18 +8,21 @@ from tweepy import Stream
 import couchdb,json
 import TwitterSentiment as ts
 import config
+from config import logPrint
 
-consumer_key = 'XqNOFK3tkWO3ueraq4WJgAbL8'
-consumer_secret = 'KA79XONJOZL8WkBpZAuqkTjDxRhiT7KGf16x2SLTCFfqSpTnoG'
-access_token = '140966719-NrfyS8phWv3pJAwCQkqoZESAWTQo6AQzfVVYH1Rf'
-access_secret = 'Efi3AuiHq1DTIAfucEFt7SgCZ8rFHsF4Cibk1RJNC95Rt'
+consumer_key = config.CONSUMER_KEY_SAI
+consumer_secret = config.CONSUMER_SECRET_SAI
+access_token = config.ACCESS_TOKEN_SAI
+access_secret = config.ACCESS_SECRET_SAI
 
 auth = tw.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 api = tw.API(auth)
 
-db=config.db_setup('')
+db=config.db_setup(config.SERVER_ADDRESS)
+filename='HarVICinNSW'
 
+logPrint(' Starting ',filename)
 class StdOutListener(StreamListener):
     def on_data(self, data):
         
@@ -28,8 +31,14 @@ class StdOutListener(StreamListener):
         clean_tweet_text=ts.processTweet(tweet['text'])
         sentiment=ts.getSentiment(clean_tweet_text)
         tweet['sentiment']=sentiment
-        db.save(tweet)
-        return True
+        tweet['_id']=tweet['id_str']
+        try:
+            db.save(tweet)
+            logPrint(' Sucess ',filename)
+            return True
+        except:
+            logPrint(' Fail ',filename)
+            return True
 
     def on_error(self, status):
         print status
