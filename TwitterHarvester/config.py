@@ -51,6 +51,7 @@ def db_setup(address=''):
         try:
             couch = couchdb.Server('http://'+USER+":"+PASS+"@"+address)
             db = couch['raw_tweets']
+            logPrint('Database Success',filename)
         except:
             logPrint('Database Connection Error',filename)
             exit()
@@ -58,6 +59,27 @@ def db_setup(address=''):
         try:
             couch = couchdb.Server(SERVER_ADDRESS)
             db = couch['raw_tweets']
+            logPrint('Database Success',filename)
+        except:
+            logPrint('Database Connection Error',filename)
+            exit()
+    return db
+
+def db_clean_setup(address=''):
+    if address == '':
+        address = 'localhost:5984/'
+        try:
+            couch = couchdb.Server('http://'+USER+":"+PASS+"@"+address)
+            db = couch['tweets_clean']
+            logPrint('Database Success',filename)
+        except:
+            logPrint('Database Connection Error',filename)
+            exit()
+    else:
+        try:
+            couch = couchdb.Server(SERVER_ADDRESS)
+            db = couch['tweets_clean']
+            logPrint('Database Success',filename)
         except:
             logPrint('Database Connection Error',filename)
             exit()

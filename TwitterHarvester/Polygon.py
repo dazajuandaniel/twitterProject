@@ -1,17 +1,21 @@
 #!/usr/bin/python
 import csv, sys
 from shapely.geometry import MultiPoint, Point
+import config
 
 suburbs = []
 polyCors = {}
 
-with open('age-attributes.csv', 'rb') as f:
+#DB Connection
+db=config.db_clean_setup(config.SERVER_ADDRESS)
+
+with open('data/age-attributes.csv', 'rb') as f:
 	reader = csv.reader(f, delimiter = ',')
 	reader.next()
 	for row in reader:
 		suburbs.append(row[0])
 
-with open('age-nodes.csv', 'rb') as f:
+with open('data/age-nodes.csv', 'rb') as f:
 	reader = csv.reader(f, delimiter = ',')
 	reader.next()
 	for code in suburbs:
@@ -27,13 +31,18 @@ for n in suburbs:
 	poly = MultiPoint(polyCors[n]).convex_hull
 	polygons[n] = poly
 
-# check whether point p is inside the first suburb or not
-p = Point(1.0, -2.1)
-print polygons['0'].contains(p)
 
-# search for the suburb which contains point p
-for s in suburbs:
-	if polygons[s].contains(p):
-		print s
-		break
+for i in db.view('view/hasGeo'):
+    #doc=db[i.id]
+	lat=db[i.id]['geo']['coordinates'][1]
+	lat=db[i.id]['geo']['coordinates'][0]
+	point=Point(lat,lon)
+	for s in suburbs:
+    	if polygons[s].contains(point):
+    		print s
+			break
+#	db.save(doc)
+
+
+
 		

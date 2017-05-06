@@ -2,3 +2,4 @@ textblob
 couchdb
 tweepy
 jsonpickle
+shapely
