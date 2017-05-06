@@ -33,9 +33,9 @@ for n in suburbs:
 
 for i in db.view('view/hasGeo'):
     lat=db[i.id]['geo']['coordinates'][1]
-    lat=db[i.id]['geo']['coordinates'][0]
+    lon=db[i.id]['geo']['coordinates'][0]
     point=Point(lat,lon)
     for suburb in suburbs:
-        if polygon[suburb].contains(point):
+        if polygons[suburb].contains(point):
             print suburb
     print "Not Found", lat," ",lon

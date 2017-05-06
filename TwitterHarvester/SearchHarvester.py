@@ -50,8 +50,8 @@ sinceId = None
 max_id = -1L
 
 # Search Criteria
-lang='en'
-geocode='-37.810279,144.962619,10000mi'
+lang = 'en'
+geocode = '-37.810279,144.962619,10000mi'
 
 searchListCount=20
 maxlistcount=len(searchList)
