@@ -2,9 +2,11 @@
 import json
 import csv, sys, re
 from shapely.geometry import MultiPoint, Point
+import config
 
-attributes = 'age-attributes.csv'
-nodes = 'age-nodes.csv'
+db=config.db_aurin_setup(config.SERVER_ADDRESS)
+attributes = 'AurinData/age-attributes.csv'
+nodes = 'AurinData/age-nodes.csv'
 suburbs = []
 name = {}
 age60 = {}

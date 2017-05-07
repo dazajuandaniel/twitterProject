@@ -3,8 +3,8 @@ import json
 import csv, sys, re
 from shapely.geometry import MultiPoint, Point
 
-attributes = 'edu-emp-attributes.csv'
-nodes = 'edu-emp-nodes.csv'
+attributes = 'AurinData/edu-emp-attributes.csv'
+nodes = 'AurinData/edu-emp-nodes.csv'
 suburbs = []
 name = {}
 uni = {}
