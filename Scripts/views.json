@@ -1,5 +1,5 @@
 {
-    "id":"_design/views",
+    "id":"_design/view",
     "rev":"1-0d4eee418b66dc42e4ea69ef1f8ce13f",
     "language":"javascript",
     "views":
@@ -31,6 +31,10 @@
         },
         "hasAfinnSentiment":{
             "map":"function(doc){if(doc.sentimentAFINN){emit(doc._id,doc)}}"
+        },
+        "hasSuburb":{
+            "map":"function(doc){if(doc.suburb){emit(doc.suburb,1)}}",
+            "reduce":"_sum"
         }
     }
 }

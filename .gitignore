@@ -91,3 +91,5 @@ ENV/
 AurinData
 /TwitterHarvester/data
 .pyc
+/TwitterHarvester/.ipynb
+

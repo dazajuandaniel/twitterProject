@@ -13,7 +13,6 @@ suburbs = []
 suburbDict={}
 
 def tofloat(x):
-    import numpy as no
     try:
         return float(x)
     except:
@@ -68,6 +67,7 @@ with open(nodes, 'rb') as f:
         except:
             totalCoordinates[row[0]]=[coordinates]
 
+
 for i in totalCoordinates:
     try:
         suburbDict[i]['allCoordinates']=totalCoordinates[i]
@@ -76,23 +76,27 @@ for i in totalCoordinates:
 
 polygons = {}
 for i in suburbDict:
-    poly = MultiPoint(suburbDict[i]['allCoordinates'].convex_hull)
-    polygons[suburbDict[i]['name']] = poly
+    try:
+        poly = MultiPoint(suburbDict[i]['allCoordinates']).convex_hull
+        polygons[i] = poly
+    except:
+        continue
 
 db=config.db_clean_setup(config.SERVER_ADDRESS)
 
-
-# find the suburb for tweet location
-for i in tweets:
-	p = Point(i[0], i[1])
-	for s in suburbs:
-		if polygons[s].contains(p):
-			print s
 count=0
-for i in db_new.view('view/hasGeo'):
+for i in db.view('view/hasNoGeo'):
     doc=db[i.key]
-    point=Point(doc[i.key]['geo']['coordinates'][0],doc[i.key]['geo']['coordinates'][1])
+    point=Point(doc['geo']['coordinates'][1],doc['geo']['coordinates'][0])
     for s in polygons:
-        print s
+        #print s
         if polygons[s].contains(point):
-            print "Success"
+            doc['suburb']=s
+            try:
+                count+=1
+                db.save(doc)
+                config.logPrint(" Success .."+str(count),'suburbtweet')
+            except:
+                config.logPrint(" DB Error",'suburbtweet')
+
+config.logPrint(" Script End ",'suburbtweet')

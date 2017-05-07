@@ -3,3 +3,4 @@ couchdb
 tweepy
 jsonpickle
 shapely
+numpy
