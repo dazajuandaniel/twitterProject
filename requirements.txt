@@ -4,3 +4,4 @@ tweepy
 jsonpickle
 shapely
 numpy
+pandas
