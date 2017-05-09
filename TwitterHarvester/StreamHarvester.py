@@ -1,12 +1,11 @@
 #!/usr/bin/python
-import sys
+import sys, json
+import couchdb
 import tweepy as tw
-from tweepy import OAuthHandler
+from tweepy import OAuthHandler, Stream
 from tweepy.streaming import StreamListener
-from tweepy import OAuthHandler
-from tweepy import Stream
-import couchdb,json
 import TwitterSentiment as ts
+import CheckKeywords as ck
 import config
 from config import logPrint
 
@@ -19,8 +18,8 @@ auth = tw.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 api = tw.API(auth)
 
-db=config.db_setup(config.SERVER_ADDRESS)
-filename='HarVICinNSW'
+db = config.db_couch(config.CLEAN_TWEETS,config.SERVER_ADDRESS)
+filename = 'StreamHarvester'
 
 logPrint(' Starting ',filename)
 class StdOutListener(StreamListener):
@@ -32,6 +31,9 @@ class StdOutListener(StreamListener):
         sentiment=ts.getSentiment(clean_tweet_text)
         tweet['sentiment']=sentiment
         tweet['_id']=tweet['id_str']
+        topic = ck.checkMigration(clean_tweet_text)
+        if topic=="migration":
+            tweet['searchQuery']=topic
         try:
             db.save(tweet)
             logPrint(' Sucess ',filename)
@@ -46,6 +48,8 @@ class StdOutListener(StreamListener):
 
 if __name__ == '__main__':
     l = StdOutListener()
-    stream = Stream(auth, l)    
+    stream = Stream(auth, l)
+    #Melbourne Area
     stream.filter(locations=[141.157913,-38.022041,146.255569,-36.412349])
+    #Sydney Area
     #stream.filter(locations=[147.921968,-35.889416,152.975679,-30.695000])

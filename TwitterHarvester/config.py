@@ -1,8 +1,6 @@
 import couchdb
 from sys import exit
 
-
-
 #JUAN
 CONSUMER_KEY_JUAN = 'XqNOFK3tkWO3ueraq4WJgAbL8'
 CONSUMER_SECRET_JUAN = 'KA79XONJOZL8WkBpZAuqkTjDxRhiT7KGf16x2SLTCFfqSpTnoG'
@@ -33,17 +31,45 @@ CONSUMER_SECRET_MICHAEL='esepC8AmVqqnLdSSEL6N1dMrB1z9TIscbEviQQzrW5JzqbBFum'
 ACCESS_TOKEN_MICHAEL='1638515630-VZn3TJDqAGOdh29o6nB4PhrvVvKHKWeRYUTmAM3'
 ACCESS_SECRET_MICHAEL='q1HXBKn8Hn9eT1jxBIIChHtX5dcTCBBptyRaqCJsiJ8ko'
 
-USER='dazaj'
-PASS='secret'
 
 #Constants
+USER='dazaj'
+PASS='secret'
 SERVER_ADDRESS='http://'+USER+":"+PASS+"@"+'115.146.93.140:5984/'
+RAW_TWEETS='raw_tweets'
+CLEAN_TWEETS='tweets_clean'
+AURIN_DB='coordinates_aurin'
+RESULTS_DB='website_results'
+
 #Special Print
 def logPrint(s,name):
     f1=open('./'+name+'.txt', 'a')
     f1.write('\n'+s+"\n")
     f1.close()
+
 filename='configFile'
+
+#DB Setup
+def db_couch(name,address=''):
+    if address=='':
+        address='localhost:5984/'
+        try:
+            couch = couchdb.Server('http://'+USER+":"+PASS+"@"+address)
+            db = couch[name]
+            logPrint('Database Success',filename)
+        except:
+            logPrint('Database Connection Error',filename)
+            exit()
+    else:
+        try:
+            couch = couchdb.Server(SERVER_ADDRESS)
+            db = couch[name]
+            logPrint('Database Success',filename)
+        except:
+            logPrint('Database Connection Error',filename)
+            exit()
+    return db
+
 #Database Setup
 def db_setup(address=''):
     if address=='':

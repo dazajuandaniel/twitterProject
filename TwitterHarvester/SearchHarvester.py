@@ -23,8 +23,8 @@ access_secret = config.ACCESS_SECRET_SAI
 
 #Database Setup
 #NSW
-db=config.db_setup(config.SERVER_ADDRESS)
-filename='HarNSW'
+db=config.db_couch(config.CLEAN_TWEETS,config.SERVER_ADDRESS)
+filename='SearchHarvester'
 
 auth = tweepy.AppAuthHandler(consumer_key, consumer_secret)
 api = tweepy.API(auth, wait_on_rate_limit=True,wait_on_rate_limit_notify=True)
@@ -51,6 +51,7 @@ max_id = -1L
 
 # Search Criteria
 lang = 'en'
+#Melbourne Area
 geocode = '-37.810279,144.962619,10000mi'
 
 searchListCount=20
@@ -84,12 +85,12 @@ while tweetCount < maxTweets:
             
             if tweetCount%18000==0:
                 time.sleep(15*60)
-                logPrint(' Sleeping 15 mins: '+str(searchQuery),filename)
+                logPrint(' Reached 18k limit, sleeping for 15 minutes: '+str(searchQuery),filename)
                 start_time=time.time()  
             end = time.time()
             if (end-start_time)>14*60:
                 time.sleep(15*60)
-                logPrint(' Sleeping 15 mins: '+str(searchQuery),filename)
+                logPrint(' Reached 15 minute limit, sleeping for 15 minutes: '+str(searchQuery),filename)
                 start_time=time.time()
             searchListCount+=1
             max_id = -1L

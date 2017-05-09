@@ -1,12 +1,12 @@
-import json
-import requests
 import pandas as pd
 import config
 headers = {"Content-Type":"application/json"}
 
 #DB Connection
-db_new=config.db_clean_setup(config.SERVER_ADDRESS)
-db_2=config.db_aurin_setup(config.SERVER_ADDRESS)
+db_new=config.db_couch(config.CLEAN_TWEETS,config.SERVER_ADDRESS)
+db_2=config.db_couch(config.AURIN_DB,config.SERVER_ADDRESS)
+db_results=config.db_couch(config.RESULTS_DB,config.SERVER_ADDRESS)
+
 #Get Documents with Migration Topic and Suburb values
 suburbList=[]
 suburbSentiment=[]
@@ -47,6 +47,8 @@ data['University']=uni
 data['high']=high
 data['income']=income
 data['employment']=employment
+data['tafe']=tafe
+data['highschool']=high
 
 #Aggregate Data
 groupedCount=data.groupby(['suburb']).count().reset_index()
@@ -105,14 +107,24 @@ for i in range(5):
     jsonDict[i]['Sentiment']=[positiveSet['sentiment'][i],negativeSet['sentiment'][i]]
     jsonDict[i]['University']=[positiveSet['University'][i],negativeSet['University'][i]]
     jsonDict[i]['Income']=[positiveSet['income'][i],negativeSet['income'][i]]
+    jsonDict[i]['employment']=[positiveSet['employment'][i],negativeSet['employment'][i]]
+    jsonDict[i]['Tafe']=[positiveSet['tafe'][i],negativeSet['tafe'][i]]
+    jsonDict[i]['High School']=[positiveSet['highschool'][i],negativeSet['highschool'][i]]
 
-print jsonDict
+
+
 #Prepare to Send Data
-data = json.dumps(jsonDict)
+jsonDict['_id']="aurinAnalytics"
+print jsonDict
 
-r = requests.post('localhost:5000/data_receive', data = data, headers = headers)
+try:
+    db_results.save(jsonDict)
+except:
+    config.logPrint("Doc not added, check logs for error.",'TwitterAnalytics')
 
-if r.ok:
-    print('POST Success')
-else:
-    print('POST Fail')
+#r = requests.post('localhost:5000/data_receive', data = data, headers = headers)
+
+#if r.ok:
+#    print('POST Success')
+#else:
+#    print('POST Fail')
