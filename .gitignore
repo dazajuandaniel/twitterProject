@@ -88,9 +88,12 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Other files
 AurinData
-/TwitterHarvester/data
+/TwitterHarvester/SupportFiles/AurinData
 .pyc
 /TwitterHarvester/.ipynb
 .key
 .ppk
+Config/keys

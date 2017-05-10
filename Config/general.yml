@@ -1,0 +1,41 @@
+---
+# set up general environment and install git
+# get git repo
+
+- hosts: newNode
+  remote_user: root
+  sudo: yes
+  tasks:
+   - name: Install python-setuptools
+     apt: pkg=python-setuptools state=installed update_cache=true
+
+   - name: Install python-dev
+     apt: pkg=python-dev state=installed update_cache=true
+
+   - name: Install libffi-dev
+     apt: pkg=libffi-dev state=installed update_cache=true
+
+   - name: Install libssl-dev
+     apt: pkg=libssl-dev state=installed update_cache=true
+
+   - name: Install pip
+     apt: name=python-pip state=present
+
+   - name: Install required packages-GIT
+     apt: name=git state=present
+
+   - name: system cache updata
+     apt: update_cache=yes
+
+   - name: Copy git private key 
+     sudo: no
+     copy: src="/etc/ansible/github.key" dest="/home/ubuntu/.ssh/github.key" 
+           mode=0400
+
+   - name: get file from the GIT
+     sudo: no
+     git: repo=git@github.com:dazajuandaniel/twitterProject.git
+           dest=/home/ubuntu/twitterProject
+           key_file="/home/ubuntu/.ssh/github.key"
+           accept_hostkey=yes
+

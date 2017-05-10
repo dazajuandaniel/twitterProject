@@ -40,6 +40,7 @@ RAW_TWEETS='raw_tweets'
 CLEAN_TWEETS='tweets_clean'
 AURIN_DB='coordinates_aurin'
 RESULTS_DB='website_results'
+NEWNODE_DB='new_node' 
 
 #Special Print
 def logPrint(s,name):
@@ -96,7 +97,7 @@ def db_clean_setup(address=''):
         address = 'localhost:5984/'
         try:
             couch = couchdb.Server('http://'+USER+":"+PASS+"@"+address)
-            db = couch['tweets_clean']
+            db = couch['new_node']
             logPrint('Database Success',filename)
         except:
             logPrint('Database Connection Error',filename)
@@ -104,7 +105,7 @@ def db_clean_setup(address=''):
     else:
         try:
             couch = couchdb.Server(SERVER_ADDRESS)
-            db = couch['tweets_clean']
+            db = couch['new_node']
             logPrint('Database Success',filename)
         except:
             logPrint('Database Connection Error',filename)

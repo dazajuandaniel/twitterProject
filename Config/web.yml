@@ -1,0 +1,23 @@
+---
+# set up environment for web
+# run web server
+- hosts: web
+  remote_user: root
+  sudo: yes
+  tasks:
+   - name: Install flask
+     easy_install: name=flask
+
+   - name: Install couchDB
+     apt: pkg=couchdb state=installed update_cache=true
+
+   - name: Install couchDB_flask
+     easy_install: name=Flask-CouchDB
+
+   - name: Install simpleJson
+     easy_install: name=simplejson
+
+   - name: run web server
+     shell: python /home/ubuntu/twitterProject/web/main2.py
+     async: 5000
+     poll: 0

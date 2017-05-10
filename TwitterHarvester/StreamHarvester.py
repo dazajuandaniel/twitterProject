@@ -5,7 +5,7 @@ import tweepy as tw
 from tweepy import OAuthHandler, Stream
 from tweepy.streaming import StreamListener
 import TwitterSentiment as ts
-import CheckKeywords as ck
+import CheckKeyword as ck
 import config
 from config import logPrint
 
@@ -18,7 +18,7 @@ auth = tw.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 api = tw.API(auth)
 
-db = config.db_couch(config.CLEAN_TWEETS,config.SERVER_ADDRESS)
+db = config.db_couch(config.NEWNODE_DB,config.SERVER_ADDRESS)
 filename = 'StreamHarvester'
 
 logPrint(' Starting ',filename)

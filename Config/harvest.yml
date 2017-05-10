@@ -1,0 +1,45 @@
+---
+# set up environment for harvest
+# run the harvester
+
+
+- hosts: newNode
+  remote_user: root
+  sudo: yes
+  tasks: 
+   - name: Install couchDB
+     apt: pkg=couchdb state=installed update_cache=true
+
+   - name: Install textblob
+     easy_install: name=textblob
+
+   - name: Install simpleJson
+     easy_install: name=simplejson
+
+   - name: Install tweepy
+     pip: name=tweepy
+
+   - name: Install jsonpickle
+     easy_install: name=jsonpickle
+
+   - name: Install numpy
+     pip: name=numpy
+
+   - name: Install pandas
+     pip: name=pandas
+
+   - name: Install shapely
+     pip: name=shapely version=1.6b2
+
+   - name: run the stream harvest file
+     shell: nohup python /home/ubuntu/twitterProject/TwitterHarvester/StreamHarvester.py
+     async: 50000
+     poll: 0
+
+  
+   - name: run the search harvest file 
+     shell: nohup python /home/ubuntu/twitterProject/TwitterHarvester/SearchHarvester.py
+     async: 50000
+     poll: 0
+
+
