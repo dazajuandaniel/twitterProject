@@ -12,8 +12,10 @@ COMP90024 Twitter Analysis
 readme.md
 Twitter Harvester:
 * Contains all the Python scripts developed to Harvest and Analyze
-Ansible:
+Config:
 * Contains Boto and Ansible Files
 Scripts:
 * Contains the MAP/REDUCE functions
+Web Service:
+* Contains the Flask Files along with the HTML templates
 ```
