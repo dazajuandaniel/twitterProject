@@ -26,11 +26,8 @@ def hello():
          sum+=values
      for keys,values in d.items():
          d[keys] = values/sum*100
-     for keys,values in d.items():
-         print(values)
      j = json.dumps([{'name': k, 'y': v} for k,v in d.items()], indent=4)
      return render_template('sentiPieChart.html', data=j)
-
 
 @app.route('/sentiHour')
 def hello2():
