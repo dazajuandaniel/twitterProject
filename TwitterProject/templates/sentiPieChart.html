@@ -1,38 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <link rel="stylesheet" href="./static/css//bootstrap.min.css">
-  <link rel="stylesheet" href="./static/css/keen-dashboards.css">
-  <link rel="stylesheet" href="./static/css/dc.min.css">
-  <link rel="stylesheet" href="./static/css/leaflet.css">
-  <link rel="stylesheet" href="./static/css/custom.css">
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="data.json"></script>
-    <script type="text/javascript" src="../src/markerclusterer.js"></script>
-    <script src ="map.js"> </script>
-    <script src ="barchart.js"> </script>
-        <script src ="hbarchart.js"> </script>
-
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
-   <link rel="stylesheet" href="./static/css//bootstrap.min.css">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-          <script src ="piechart.js"> </script>
-              <script src ="hbarchart.js"> </script>
-        <script src ="long.js"> </script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
 
-</head>
-<div id="phone-brand-row-chart"></div>
-<div id="demo"></div>
+<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 
 <script>
 
 var series = {{ data|safe }}
 
-Highcharts.chart('demo', {
+Highcharts.chart('container', {
     chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
@@ -74,28 +49,7 @@ Highcharts.chart('demo', {
 
 
 </script>
- <link rel="stylesheet" href="./static/css//bootstrap.min.css">
-  <link rel="stylesheet" href="./static/css/keen-dashboards.css">
-  <link rel="stylesheet" href="./static/css/dc.min.css">
-  <link rel="stylesheet" href="./static/css/leaflet.css">
-  <link rel="stylesheet" href="./static/css/custom.css">
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="data.json"></script>
-    <script type="text/javascript" src="../src/markerclusterer.js"></script>
-    <script src ="map.js"> </script>
-    <script src ="barchart.js"> </script>
-        <script src ="hbarchart.js"> </script>
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
-   <link rel="stylesheet" href="./static/lib/css//bootstrap.min.css">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-          <script src ="piechart.js"> </script>
-              <script src ="hbarchart.js"> </script>
-        <script src ="long.js"> </script>
 
 
 </html>
