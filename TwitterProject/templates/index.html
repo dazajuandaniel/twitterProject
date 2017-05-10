@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Twitter Project</title>
+	<meta charset="utf-8">
+	<meta name="author" content="pixelhint.com">
+	<meta name="description" content="Sublime Stunning free HTML5/CSS3 website template"/>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/reset.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/fancybox-thumbs.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/fancybox-buttons.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/fancybox.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/animate.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
+
+
+
+    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/fancybox.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/fancybox-buttons.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/fancybox-media.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/fancybox-thumb.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/js.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/main.js') }}"></script>
+</head>
+<body>
+
+	<section class="billboard dark">
+		<header class="wrapper dark">
+			<a href="#"><img class="logo" src="img/logo_dark.png" alt=""/></a>
+			<nav>
+				<ul>
+					<li><a href="">Junwen Zhang</a></li>
+					<li><a href="">Juan Daniel Daza</a></li>
+					<li><a href="">Mingyan Wei</a></li>
+					<li><a href="">Wen Zhang</a></li>
+					<li><a href="">Sai Sree Vatsav</a></li>
+
+
+
+
+				</ul>
+			</nav>
+		</header>
+
+		<div class="caption dark animated wow fadeInDown clearfix">
+			<h1>Twitter Project</h1>
+			<p></p>
+		</div>
+		<div class="shadow"></div>
+	</section><!--  End billboard  -->
+
+
+	<section class="services wrapper">
+		<ul class="clearfix">
+			<li class="animated wow fadeInDown">
+				<a href="/sentiHour"><img class="icon" src="{{url_for('static', filename='001.png')}}"" alt=""/></a>
+				<span class="separator"></span>
+				<h2>Tweets By Hour</h2>
+				<p></p>
+			</li>
+			<li class="animated wow fadeInDown"  data-wow-delay=".2s">
+				<a href="/sentiHourSenti"><img class="icon" src="{{url_for('static', filename='002.png')}}"" alt=""/></a>
+				<span class="separator"></span>
+				<h2>Twitter Sentiment Analysis By Hour</h2>
+				<p></p>
+			</li>
+			<li class="animated wow fadeInDown"  data-wow-delay=".4s">
+				<a href="/sentiPieChart"><img class="icon" src="{{url_for('static', filename='003.png')}}"" alt=""/></a>
+				<span class="separator"></span>
+				<h2>Tweets Sentiment Analysis PieChart Comparison</h2>
+				<p></p>
+			</li>
+
+
+		</ul>
+			<ul class="clearfix">
+			<li class="animated wow fadeInDown">
+				<a href="/immigrationEdu"><img class="icon" src="{{url_for('static', filename='004.png')}}""  alt=""/></a>
+				<span class="separator"></span>
+				<h2>Immigration Attitude Study with Education</h2>
+				<p></p>
+			</li>
+			<li class="animated wow fadeInDown"  data-wow-delay=".2s">
+				<a href="/immigrationMoney"><img class="icon" src="{{url_for('static', filename='001.png')}}""  alt=""/></a>
+				<span class="separator"></span>
+				<h2>Immigration Attitude Study with Emoloyment and Income</h2>
+				<p></p>
+			</li>
+			
+
+		</ul>
+	</section><!--  End services  -->
+
+
+
+
+	
+
+
+	
+    <script src='../ga.js'></script>
+</body>
+</html>
