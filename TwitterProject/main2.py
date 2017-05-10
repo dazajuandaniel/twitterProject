@@ -113,7 +113,7 @@ def hello7():
         return render_template('map.html', data=str)
  
      
-
+@app.route('/')
 @app.route('/index')
 def hello6():
     return render_template('index.html', data=str)
