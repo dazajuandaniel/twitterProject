@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 
 
-@app.route('/sentiPieChart')
+@app.route('/sentiPieChart' ,methods=['GET'])
 def hello():
      server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
      db = server['tweets_clean']
@@ -29,7 +29,7 @@ def hello():
      j = json.dumps([{'name': k, 'y': v} for k,v in d.items()], indent=4)
      return render_template('sentiPieChart.html', data=j)
 
-@app.route('/sentiHour')
+@app.route('/sentiHour', methods=['GET'])
 def hello2():
      server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
      db = server['tweets_clean']
@@ -42,7 +42,7 @@ def hello2():
      j = json.dumps([tempd],indent=4)
      return render_template('sentiHour.html', data=j)
 
-@app.route('/sentiHourSenti')
+@app.route('/sentiHourSenti', methods=['GET'])
 def hello3():
      server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
      db = server['tweets_clean']
@@ -67,7 +67,7 @@ def hello3():
 
 
 
-@app.route('/immigrationEdu')
+@app.route('/immigrationEdu', methods=['GET'])
 def hello4():
     server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
     db = server['twitter_analysis']  
@@ -89,7 +89,7 @@ def hello4():
 
 
 
-@app.route('/immigrationMoney')
+@app.route('/immigrationMoney', methods=['GET'])
 def hello5():
     server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
     db = server['twitter_analysis3']    
@@ -102,7 +102,7 @@ def hello5():
 
      
     
-@app.route('/map')
+@app.route('/map', methods=['GET'])
 def hello7():
     server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
     db = server['map']  
@@ -114,7 +114,7 @@ def hello7():
  
      
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods=['GET'])
 def hello6():
     return render_template('index.html', data=str)
 
