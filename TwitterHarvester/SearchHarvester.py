@@ -23,7 +23,7 @@ access_secret = config.ACCESS_SECRET_SAI
 
 #Database Setup
 #NSW
-db=config.db_couch(config.CLEAN_TWEETS,config.SERVER_ADDRESS)
+db=config.db_couch(config.NEWNODE_DB,config.SERVER_ADDRESS)
 filename='SearchHarvester'
 
 auth = tweepy.AppAuthHandler(consumer_key, consumer_secret)
