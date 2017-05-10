@@ -5,6 +5,8 @@ import simplejson as json
 from flask import Flask
 from flask import render_template
 import json
+from flask import make_response,jsonify
+
 
 
 app = Flask(__name__)
@@ -126,12 +128,5 @@ def not_found(error):
      
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
-
-
-
-
-
-
-
 
 
