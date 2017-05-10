@@ -100,6 +100,19 @@ def hello5():
         return render_template('immigrationMoney.html', data=str)
         
 
+     
+    
+@app.route('/map')
+def hello7():
+    server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
+    db = server['map']  
+    for docid in db:
+        doc = db[docid]
+        tweettext = doc['docs']
+        str = json.dumps(tweettext)
+        return render_template('map.html', data=str)
+ 
+     
 
 @app.route('/index')
 def hello6():
