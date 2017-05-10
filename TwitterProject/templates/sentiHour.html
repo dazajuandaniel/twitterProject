@@ -1,0 +1,41 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="containermorning" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script type="text/javascript">
+
+var series = {{ data|safe }}
+
+
+Highcharts.chart('containermorning', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Time'
+    },
+    subtitle: {
+        text: 'www.twitter.com'
+    },
+    xAxis: {
+        categories: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11','12','13','14','15','16','17','18','19','20','21','22','23']
+    },
+    yAxis: {
+        title: {
+            text: 'Number of Tweets'
+        }
+    },
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+        }
+    },
+    series: series
+
+});
+</script>>
+
