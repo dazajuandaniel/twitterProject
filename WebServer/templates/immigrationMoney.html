@@ -1,0 +1,44 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+<div id="container" style="min-width: 1210px; max-width: 1000px; height: 600px; margin: 0 auto;"></div>
+
+
+<script>
+
+var series = {{data|safe}}
+
+Highcharts.chart('container', {
+    chart: {
+        type: 'bubble',
+        plotBorderWidth: 1,
+        zoomType: 'xy'
+    },
+
+    title: {
+        text: 'Immigration Attitude Study with Employment and Income'
+    },
+    subtitle: {
+        text: 'series1:Positive Suburbs<br>series2:Negative Suburbs'
+    },
+
+    xAxis: {
+        gridLineWidth: 1,
+        title: {
+            text: 'Level Of Emoloyment'
+        }
+        
+    },
+
+ 
+    yAxis: {
+        startOnTick: false,
+        endOnTick: false,
+        title: {
+            text: 'Level Of Income'
+        }
+
+    },
+    series: series
+});
+</script>>
