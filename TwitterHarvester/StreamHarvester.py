@@ -18,7 +18,7 @@ auth = tw.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 api = tw.API(auth)
 
-db = config.db_couch(config.CLEAN_TWEETS,config.SERVER_ADDRESS)
+db = config.db_couch(config.NEWNODE_DB,config.SERVER_ADDRESS)
 filename = 'StreamHarvester'
 
 logPrint(' Starting ',filename)
