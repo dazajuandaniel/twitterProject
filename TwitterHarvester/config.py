@@ -40,6 +40,7 @@ RAW_TWEETS='raw_tweets'
 CLEAN_TWEETS='tweets_clean'
 AURIN_DB='coordinates_aurin'
 RESULTS_DB='website_results'
+NEWNODE_DB='new_node' 
 
 #Special Print
 def logPrint(s,name):
