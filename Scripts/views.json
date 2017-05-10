@@ -1,40 +1,31 @@
 {
-    "id":"_design/view",
-    "rev":"1-0d4eee418b66dc42e4ea69ef1f8ce13f",
+    "_id":"_design/view",
+    "_rev":"6-33c0e3f29986a13d97b3bf52e418cd4b",
+    "id":"_design/views",
     "language":"javascript",
-    "views":
-    {
-        "hasGeo":{
-            "map":"function (doc){ if(doc.geo) emit (doc._id,doc) }"
-        },
-        "allDocs":{
-            "map":"function (doc){if(doc) emit (doc._id,doc)}"
-        },
-        "TweetsbyHour":{
-            "map":"function(doc){function parseTwitterDate(text){return new Date(Date.parse(text.replace(/( +)/, ' UTC$1')));}var tweetdate=parseTwitterDate(doc.created_at);var seconds = tweetdate.getSeconds();var minutes = tweetdate.getMinutes();var hour = tweetdate.getHours();if(tweetdate && doc.sentiment){emit(hour,1)}}",
-            "reduce":"_sum"
-        },
-        "TweetsbyHourSentiment":{
-            "map":"function(doc){function parseTwitterDate(text){return new Date(Date.parse(text.replace(/( +)/, ' UTC$1')));}var tweetdate=parseTwitterDate(doc.created_at);var seconds = tweetdate.getSeconds();var minutes = tweetdate.getMinutes();var hour = tweetdate.getHours();if(tweetdate && doc.sentiment){emit([hour,doc.sentiment],1)}}",
-            "reduce":"_sum"
-        },
-        "HasNoSentiment":{
-            "map":"function(doc){if(!doc.sentiment){emit(doc.id,doc)}}"
-        },
-        "TweetsbySentiment":{
-            "map":"function(doc){if(doc.sentiment){emit(doc.sentiment,1)}}",
-            "reduce":"_sum"
-        },
-        "hasAfinnSentimentAggregated":{
-            "map":"function(doc){if(doc.sentimentAFINN){emit(doc.sentimentAFINN,1)}}",
-            "reduce":"_sum"
-        },
-        "hasAfinnSentiment":{
-            "map":"function(doc){if(doc.sentimentAFINN){emit(doc._id,doc)}}"
-        },
-        "hasSuburb":{
-            "map":"function(doc){if(doc.suburb){emit(doc.suburb,1)}}",
-            "reduce":"_sum"
-        }
+    "views":{"hasGeo":{"map":"function (doc){ if(doc.geo) emit (doc._id,doc) }"},
+    "allDocs":{"map":"function (doc){if(doc) emit (doc._id,doc)}"},
+    "TweetsbyHour":{"map":"function(doc){function parseTwitterDate(text){return new Date(Date.parse(text.replace(/( +)/, ' UTC$1')));}var tweetdate=parseTwitterDate(doc.created_at);var seconds = tweetdate.getSeconds();var minutes = tweetdate.getMinutes();var hour = tweetdate.getHours();if(tweetdate && doc.sentiment){emit(hour,1)}}","reduce":"_sum"},
+    "TweetsbyHourSentiment":{"map":"function(doc){function parseTwitterDate(text){return new Date(Date.parse(text.replace(/( +)/, ' UTC$1')));}var tweetdate=parseTwitterDate(doc.created_at);var seconds = tweetdate.getSeconds();var minutes = tweetdate.getMinutes();var hour = tweetdate.getHours();if(tweetdate && doc.sentiment){emit([hour,doc.sentiment],1)}}","reduce":"_sum"},
+    "HasNoSentiment":{"map":"function(doc){if(!doc.sentiment){emit(doc.id,doc)}}"},
+    "TweetsbySentiment":{"map":"function(doc){if(doc.sentiment){emit(doc.sentiment,1)}}",
+    "reduce":"_sum"},
+    "hasAfinnSentimentAggregated":{"map":"function(doc){if(doc.sentimentAFINN){emit(doc.sentimentAFINN,1)}}",
+    "reduce":"_sum"},
+    "hasAfinnSentiment":{"map":"function(doc){if(doc.sentimentAFINN){emit(doc._id,doc)}}"},
+    "hasSuburb":{
+        "map":"function(doc){if(doc.suburb){emit(doc.suburb,1)}}",
+        "reduce":"_sum"
+    },
+    "hasNoSuburb":{
+        "map":"function(doc){if(!doc.suburb){emit(doc._id,doc)}}"},
+    "hasSuburbandQuery":{
+        "map":"function(doc){if(doc.suburb && doc.searchQuery){emit(doc.suburb,1)}}",
+        "reduce":"_sum"
+    },
+    "hasSuburbNoQuery":{
+        "map":"function(doc){if(doc.suburb && !doc.searchQuery){emit(doc._id,doc)}}"},
+    "MigrationSuburbSent":{
+        "map":"function(doc){if(doc.suburb && doc.searchQuery==\"migration\"){emit([doc.suburb,doc.sentiment],1)}}",
+        "reduce":"_sum"}}
     }
-}

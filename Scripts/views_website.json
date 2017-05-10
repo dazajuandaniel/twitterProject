@@ -1,0 +1,7 @@
+{
+    "_id":"_design/views",
+    "_rev":"1-c5d118503a4419dbebe22c351c8da383",
+    "language":"javascript",
+    "views":{
+        "aurinAnalytics":{"map":"function(doc) {\nif (doc._id==\"aurinAnalytics\"){\nemit(doc._id, doc);}\n}"}}
+}

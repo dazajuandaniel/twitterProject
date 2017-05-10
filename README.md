@@ -3,17 +3,17 @@ COMP90024 Twitter Analysis
 
 # Members
 * Juan Daniel Daza
-* 
-* 
-* 
-
-# Running the App
-1. Make sure all the dependencies mentioned in the `requirements.txt` file are installed
-2. Tu run the Flask app do the following:
+* Junwen Zhang
+* Mingyan Wei
+* Wen Zhang
 
 # Project Structure
 ```
 readme.md
-flask app
-Ansible
+Twitter Harvester:
+* Contains all the Python scripts developed to Harvest and Analyze
+Ansible:
+* Contains Boto and Ansible Files
+Scripts:
+* Contains the MAP/REDUCE functions
 ```

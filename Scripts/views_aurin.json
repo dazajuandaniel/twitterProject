@@ -1,0 +1,7 @@
+{
+    "_id":"_design/views",
+    "_rev":"1-76a82dc27201bddd31d691b4cf1eeb0b",
+    "language":"javascript",
+    "views":{
+        "allDocs":{"map":"function(doc) {\nif(doc)\n  emit(doc._id,doc);\n}"}}
+}
