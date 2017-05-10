@@ -5,3 +5,5 @@ jsonpickle
 shapely
 numpy
 pandas
+simplejson
+flask

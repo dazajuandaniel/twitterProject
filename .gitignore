@@ -92,4 +92,5 @@ AurinData
 /TwitterHarvester/data
 .pyc
 /TwitterHarvester/.ipynb
-
+.key
+.ppk

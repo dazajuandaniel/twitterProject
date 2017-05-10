@@ -1,7 +1,4 @@
 
-
-
-
 import json
 import requests
 import pandas as pd
@@ -103,26 +100,9 @@ negativeSet=negativeSet.sort_values(by='University',ascending=False).reset_index
 positiveSet=dataSorted[(dataSorted['sentiment']=="Positive")].head()
 positiveSet=positiveSet.sort_values(by='University',ascending=False).reset_index()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 td1 = {'type':'column','name':'TAFE','data':[]}
 td2 = {'type':'column','name':'UNIVERSITY','data':[]}
 td3 = {'type':'column','name':'HIGH SCHOOL','data':[]}
-
-
-
 
 total = [1,2,3,4,5]
 t = [0,0,0]
@@ -152,10 +132,6 @@ for key,values in positiveSet.items():
          total[i] += k
          i += 1
         i = 0 
-
-
-
-
 
 tdpie = {
         'type': 'pie',
