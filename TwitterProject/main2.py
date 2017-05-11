@@ -5,10 +5,17 @@ import simplejson as json
 from flask import Flask
 from flask import render_template
 import json
+from flask import make_response,jsonify
+
+
 
 app = Flask(__name__)
 
-@app.route('/sentiPieChart')
+
+
+
+
+@app.route('/sentiPieChart' ,methods=['GET'])
 def hello():
      server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
      db = server['tweets_clean']
@@ -17,16 +24,14 @@ def hello():
      sum = 0 
      for row in list(v):
          d[row.key] = row.value
+         sum = sum + row.value
+     
      for keys,values in d.items():
-         sum+=values
-     for keys,values in d.items():
-         d[keys] = values/sum*100
- 
+         d[keys] = (values/float(sum))*100
      j = json.dumps([{'name': k, 'y': v} for k,v in d.items()], indent=4)
      return render_template('sentiPieChart.html', data=j)
 
-
-@app.route('/sentiHour')
+@app.route('/sentiHour', methods=['GET'])
 def hello2():
      server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
      db = server['tweets_clean']
@@ -39,7 +44,7 @@ def hello2():
      j = json.dumps([tempd],indent=4)
      return render_template('sentiHour.html', data=j)
 
-@app.route('/sentiHourSenti')
+@app.route('/sentiHourSenti', methods=['GET'])
 def hello3():
      server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
      db = server['tweets_clean']
@@ -58,7 +63,13 @@ def hello3():
      j = json.dumps([td1,td2,td3],indent=4)
      return render_template('sentiHourSenti.html', data=j)
 
-@app.route('/immigrationEdu')
+
+
+
+
+
+
+@app.route('/immigrationEdu', methods=['GET'])
 def hello4():
     server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
     db = server['twitter_analysis']  
@@ -76,7 +87,11 @@ def hello4():
 
     return render_template('immigrationEdu.html', data=str,data2=str2)
 
-@app.route('/immigrationMoney')
+
+
+
+
+@app.route('/immigrationMoney', methods=['GET'])
 def hello5():
     server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
     db = server['twitter_analysis3']    
@@ -85,44 +100,33 @@ def hello5():
         tweettext = doc['docs']
         str = json.dumps(tweettext)
         return render_template('immigrationMoney.html', data=str)
+        
 
-@app.route('/index')
+     
+    
+@app.route('/map', methods=['GET'])
+def hello7():
+    server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
+    db = server['map']  
+    for docid in db:
+        doc = db[docid]
+        tweettext = doc['docs']
+        str = json.dumps(tweettext)
+        return render_template('map.html', data=str)
+ 
+     
+@app.route('/')
+@app.route('/index', methods=['GET'])
 def hello6():
     return render_template('index.html', data=str)
 
-# @app.route('/map')
-# def hello7():
-#        server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
-#        db = server['tweets_clean']
-#        v = db.view('_design/view/_view/hasGeo')
-#        v_len= len(list(v))
-#        arr = [{"id":0,"lat":0,"lng":0} for k in range(v_len)]
-#        i = 0
-#        for row in (list(v)):             
-#          arr[i]["id"]  = i
-#          arr[i]["lat"] = row.value['geo']['coordinates'][0]
-#          arr[i]["lng"] = row.value['geo']['coordinates'][1]
-#          i += 1
 
-#        str = json.dumps(arr)
-#        print (str)
-#     server = couchdb.Server('http://dazaj:secret@115.146.93.140:5984')
-#     db = server['twitter_analysis3']    
-#     for docid in db:
-#         doc = db[docid]
-#         tweettext = doc['docs']
-#         str = json.dumps(tweettext)
-#         return render_template('immigrationMoney.html', data=str)
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
      
 if __name__ == "__main__":
-    hello7()
     app.run(host='0.0.0.0', port=5000, debug=True)
-
-
-
-
-
-
-
 
 

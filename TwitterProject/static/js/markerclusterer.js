@@ -190,7 +190,7 @@ function MarkerClusterer(map, opt_markers, opt_options) {
  * @type {string}
  * @private
  */
-MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ = '../images/m';
+MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ = "{{url_for('static', filename='images/m')}}",
 
 
 /**
@@ -246,7 +246,7 @@ MarkerClusterer.prototype.setupStyles_ = function() {
 
   for (var i = 0, size; size = this.sizes[i]; i++) {
     this.styles_.push({
-      url: this.imagePath_ + (i + 1) + '.' + this.imageExtension_,
+      url: "{{url_for('static', filename='images/m1.png')}}",
       height: size,
       width: size
     });
@@ -825,7 +825,7 @@ Cluster.prototype.isMarkerAlreadyAdded = function(marker) {
   } else {
     for (var i = 0, m; m = this.markers_[i]; i++) {
       if (m == marker) {
-        return true;
+        return true
       }
     }
   }
@@ -1254,7 +1254,7 @@ ClusterIcon.prototype.createCss = function(pos) {
         this.height_ + 'px; width:' + this.width_ + 'px; text-align:center;');
   }
 
-  var txtColor = this.textColor_ ? this.textColor_ : 'black';
+  var txtColor = this.textColor_ ? this.textColor_ : 'red';
   var txtSize = this.textSize_ ? this.textSize_ : 11;
 
   style.push('cursor:pointer; top:' + pos.y + 'px; left:' +

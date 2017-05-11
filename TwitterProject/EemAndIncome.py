@@ -146,6 +146,9 @@ for key,values in negativeSet.items():
        arr2[m][2]=((1-k)*10)
        m += 1
 
+
+
+    
 td1 = {'data': arr,
         'marker': {
             'fillColor': {
@@ -170,6 +173,11 @@ td2 = {'data': arr2,
             }
         }
     }
+
+
+
+
+
 
 j = json.dumps([td1,td2],indent=4)
 print(j)
